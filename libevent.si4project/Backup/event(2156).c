@@ -504,14 +504,14 @@ event_to_event_callback(struct event *ev)
 struct event_base *
 event_init(void)
 {
-	struct event_base *base = event_base_new_with_config(NULL);	//创建一个集合对象
+	struct event_base *base = event_base_new_with_config(NULL);
 
 	if (base == NULL) {
 		event_errx(1, "%s: Unable to construct event_base", __func__);
 		return NULL;
 	}
 
-	current_base = base;	//current_base是一个全局变量  指向“current_base - Constant in regress.c (test) at line 869”
+	current_base = base;
 
 	return (base);
 }
@@ -2109,8 +2109,6 @@ event_base_once(struct event_base *base, evutil_socket_t fd, short events,
 	return (0);
 }
 
-
-//event_assign函数可以实现把一个事件加入到一个指定的集合中
 int
 event_assign(struct event *ev, struct event_base *base, evutil_socket_t fd, short events, void (*callback)(evutil_socket_t, short, void *), void *arg)
 {
@@ -2177,13 +2175,12 @@ event_base_set(struct event_base *base, struct event *ev)
 	return (0);
 }
 
-//把一个事件加入到全局变量current_base事件集合中
 void
 event_set(struct event *ev, evutil_socket_t fd, short events,
 	  void (*callback)(evutil_socket_t, short, void *), void *arg)
 {
 	int r;
-	r = event_assign(ev, current_base, fd, events, callback, arg);//event_assign函数可以实现把一个事件加入到一个指定的集合中
+	r = event_assign(ev, current_base, fd, events, callback, arg);
 	EVUTIL_ASSERT(r == 0);
 }
 
